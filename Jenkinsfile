@@ -86,6 +86,7 @@ pipeline {
                         -Dsonar.projectKey=minilink \
                         -Dsonar.sources=src \
                         -Dsonar.python.coverage.reportPaths=coverage.xml
+                        -Dsonar.working.directory=.scannerwork
                     '''
                 }
             }
