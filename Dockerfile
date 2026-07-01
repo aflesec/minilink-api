@@ -10,7 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Etape 2 : copier le code source (invalide a chaque modif du code)
+# Etape 2 : copier le code source
 COPY src/ ./src/
 COPY tests/ ./tests/
 

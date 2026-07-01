@@ -4,12 +4,11 @@ from prometheus_client import Counter, Gauge, Histogram
 from src.schemas import ShortenRequest, ShortenResponse
 from src.store import LinkStore
 import time
- 
+
 app = FastAPI(title="MiniLink", version="0.1.0")
 store = LinkStore()
 BASE_URL = "http://localhost:8000"
- 
-# Metriques metier MiniLink
+
 links_created_total = Counter(
     "minilink_links_created_total",
     "Nombre total de liens crees",
@@ -29,16 +28,15 @@ shorten_duration = Histogram(
     "Duree de creation d'un lien court en secondes",
     buckets=[0.005, 0.01, 0.05, 0.1, 0.25, 0.5, 1.0]
 )
- 
-# Instrumentation automatique HTTP (expose GET /metrics)
+
 Instrumentator().instrument(app).expose(app)
- 
- 
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
- 
- 
+
+
 @app.post("/shorten", response_model=ShortenResponse)
 def shorten(request: ShortenRequest):
     start = time.time()
@@ -54,8 +52,8 @@ def shorten(request: ShortenRequest):
     except Exception:
         links_created_total.labels(status="error").inc()
         raise
- 
- 
+
+
 @app.get("/resolve/{code}")
 def resolve(code: str):
     url = store.resolve(code)

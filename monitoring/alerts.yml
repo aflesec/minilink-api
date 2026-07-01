@@ -1,0 +1,32 @@
+groups:
+  - name: minilink
+    rules:
+      - alert: HighShortenLatency
+        expr: |
+          histogram_quantile(0.99,
+            rate(minilink_shorten_duration_seconds_bucket[5m])
+          ) > 0.3
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Latence p99 elevee sur la creation de liens'
+
+      - alert: HighErrorRate
+        expr: |
+          rate(http_requests_total{status=~"5.."}[5m])
+          / rate(http_requests_total[5m]) * 100 > 5
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Taux d'erreurs 5xx > 5%"
+
+      - alert: HighNotFoundRate
+        expr: |
+          rate(minilink_redirects_total{status="not_found"}[5m]) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'Beaucoup de codes inconnus - verifier les liens'

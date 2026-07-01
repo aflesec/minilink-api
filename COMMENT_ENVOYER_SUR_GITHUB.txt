@@ -1,0 +1,34 @@
+========================================================
+  ENVOYER LE PROJET MINILINK SUR GITHUB (compte aflesec)
+========================================================
+
+PREREQUIS
+  - Git installe (git --version)
+  - Depot PUBLIC deja cree sur GitHub, nomme : minilink-api
+    (GitHub -> New repository -> Public -> NE PAS ajouter de README)
+
+ETAPES (Windows / PowerShell)
+  1. Decompressez ce dossier, ouvrez-le dans un terminal :
+       cd minilink-api
+  2. Lancez :
+       .\push_to_github.ps1
+  3. Si Git demande vos identifiants : utilisez un Personal Access
+     Token GitHub comme MOT DE PASSE (les mots de passe classiques
+     ne fonctionnent plus pour le push).
+
+ETAPES (macOS / Linux / Git Bash)
+       cd minilink-api
+       bash push_to_github.sh
+
+APRES LE PUSH
+  - Verifiez : https://github.com/aflesec/minilink-api
+  - Le pseudo "aflesec" est deja renseigne dans le Jenkinsfile
+    (ghcr.io/aflesec) et dans infra/variables.tf.
+
+CONTENU DU PROJET
+  src/          code de l'API (FastAPI + metriques Prometheus)
+  tests/        tests pytest
+  infra/        Terraform (reseau, image, conteneur)
+  monitoring/   Prometheus + Grafana
+  Dockerfile, docker-compose.yml, Makefile, requirements.txt
+  Jenkinsfile   pipeline CI/CD 11 stages
