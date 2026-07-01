@@ -82,26 +82,26 @@ pipeline {
         }
 
         stage('SonarQube') {
-            environment {
-                SONAR_TOKEN = credentials('sonar-token')
-            }
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh """
-                    docker run --rm --network cicd-network \
-                      --volumes-from jenkins \
-                      -w \$WORKSPACE \
-                      -e SONAR_HOST_URL=\$SONAR_HOST_URL \
-                      -e SONAR_TOKEN=\$SONAR_TOKEN \
-                      sonarsource/sonar-scanner-cli:latest \
-                      sonar-scanner \
-                        -Dsonar.projectKey=minilink \
-                        -Dsonar.sources=src \
-                        -Dsonar.python.coverage.reportPaths=coverage.xml
-                    """
-                }
+    environment {
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+    steps {
+        withSonarQubeEnv('sonarqube') {
+            sh """
+            docker run --rm --network cicd-network \
+              --volumes-from jenkins \
+              -w \$WORKSPACE \
+              -e SONAR_HOST_URL=\$SONAR_HOST_URL \
+              -e SONAR_TOKEN=\$SONAR_TOKEN \
+              sonarsource/sonar-scanner-cli:latest \
+              sonar-scanner \
+                -Dsonar.projectKey=minilink \
+                -Dsonar.sources=src \
+                -Dsonar.python.coverage.reportPaths=coverage.xml
+            """
             }
         }
+}
 
         stage('Quality Gate') {
             steps {
