@@ -7,9 +7,7 @@ terraform {
   }
 }
 
-provider "docker" {
-  host = "npipe:////./pipe/docker_engine"
-}
+provider "docker" {}
 
 data "docker_network" "cicd" {
   name = "cicd-network"
