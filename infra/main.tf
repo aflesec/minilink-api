@@ -11,7 +11,7 @@ provider "docker" {
   host = "npipe:////./pipe/docker_engine"
 }
 
-resource "docker_network" "cicd" {
+data "docker_network" "cicd" {
   name = "cicd-network"
 }
 
