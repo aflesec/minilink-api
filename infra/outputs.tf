@@ -7,5 +7,5 @@ output "app_url" {
 }
 
 output "network_name" {
-  value = docker_network.cicd.name
+  value = data.docker_network.cicd.name
 }
