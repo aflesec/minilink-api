@@ -26,7 +26,7 @@ resource "docker_container" "minilink_staging" {
   restart = "unless-stopped"
 
   networks_advanced {
-    name = docker_network.cicd.name
+    name = data.docker_network.cicd.name
   }
 
   ports {
